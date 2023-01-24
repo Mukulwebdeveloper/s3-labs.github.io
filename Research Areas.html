@@ -31,6 +31,260 @@
           </button> -->
         </div>
       </header>
-      
+      <!-- Styles -->
+<style>
+  #chartdiv {
+    width: 100%;
+    max-width: 100%;
+    height: 550px;
+    background-color: #111827;
+  }
+
+  </style>
+  
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  
+  <!-- Chart code -->
+  <script>
+  am5.ready(function() {
+  
+  // Create root element
+  // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+  var root = am5.Root.new("chartdiv");
+  
+  // Set themes
+  // https://www.amcharts.com/docs/v5/concepts/themes/
+  root.setThemes([
+    am5themes_Animated.new(root)
+  ]);
+  
+  var data = {
+    value: 0,
+    children: [
+            {
+        name: "Smart Solutions for Society",
+        children: [
+          {
+            name: "NetrAI",
+            children: [
+              {
+                name: "Work1",
+                value: 1
+              },
+              {
+                name: "Work2",
+                value: 1
+              },
+              {
+                name: "Work3",
+                value: 1
+              },
+              {
+                name: "Work4",
+                value: 1
+              }
+            ]
+          },
+          {
+            name: "",
+            children: [
+              {
+                name: "Raisin",
+                value: 1
+              },
+              {
+                name: "Prune",
+                value: 1
+              }
+            ]
+          },
+          
+          
+        {
+          name: "Citrus Fruit",
+          children: [
+            {
+              name: "Grapefruit",
+              value: 1
+            },
+            {
+              name: "Orange",
+              value: 1
+            },
+            {
+              name: "Lemon",
+              value: 1
+            },
+            {
+              name: "Lime",
+              value: 1
+            }
+          ]
+        }
+      ]
+    },
+    
+    
+    {
+      name: "Simple Solutions by Students",
+      children: [
+        {
+          name: "Face Detection",
+          value: 1
+        },
+        {
+          name: "Medical Image Processing",
+          value: 1
+        },
+        {
+          name: "Green/Vegetative",
+          children: [
+            {
+              name: "Under-ripe",
+              value: 1
+            },
+            {
+              name: "Peapod",
+              value: 1
+            },
+            {
+              name: "Fresh",
+              value: 1
+            },
+            {
+              name: "Dark Green",
+              value: 1
+            },
+            {
+              name: "Vegetative",
+              value: 1
+            },
+            {
+              name: "Hay-like",
+              value: 1
+            },
+            {
+              name: "Herb-like",
+              value: 1
+            }
+          ]
+        },
+        {
+          name: "Beany",
+          value: 1
+        }
+      ]
+    },
+    {
+      name: "Other",
+      children: [
+        {
+          name: "Papery/Musty",
+          children: [
+            {
+              name: "Stale",
+              value: 1
+            },
+            {
+              name: "Cardboard",
+              value: 1
+            },
+            {
+              name: "Papery",
+              value: 1
+            },
+            {
+              name: "Woody",
+              value: 1
+            },
+            {
+              name: "Moldy/Damp",
+              value: 1
+            },
+            {
+              name: "Musty/Dusty",
+              value: 1
+            },
+            {
+              name: "Musty/Earthy",
+              value: 1
+            },
+            {
+              name: "Animalic",
+              value: 1
+            },
+            {
+              name: "Meaty Brothy",
+              value: 1
+            },
+            {
+              name: "Phenolic",
+              value: 1
+            }
+          ]
+        }
+        
+        ]
+      }
+    ]
+  };
+  
+  // Create wrapper container
+  var container = root.container.children.push(am5.Container.new(root, {
+    width: am5.percent(100),
+    height: am5.percent(100),
+    layout: root.verticalLayout
+  }));
+  
+  // Create series
+  // https://www.amcharts.com/docs/v5/charts/hierarchy/#Adding
+  var series = container.children.push(am5hierarchy.ForceDirected.new(root, {
+    singleBranchOnly: false,
+    downDepth: 2,
+    topDepth: 1,
+    initialDepth: 1,
+    valueField: "value",
+    categoryField: "name",
+    childDataField: "children",
+    idField: "name",
+    linkWithField: "linkWith",
+    manyBodyStrength: -30,
+    centerStrength: 0.8
+  }));
+  
+  series.get("colors").setAll({
+    step: 2
+  });
+  
+  series.links.template.set("strength", 0.5);
+  
+  series.data.setAll([data]);
+  
+  series.set("selectedDataItem", series.dataItems[0]);
+  
+  
+  // Make stuff animate on load
+  series.appear(1000, 100);
+  
+  }); // end am5.ready()
+  </script>
+  
+  <!-- HTML -->
+  <section class="text-gray-400 body-font bg-gray-900" id="Content">
+    <div>
+      <div class="container px-5 py-24 mx-auto" id="Header">
+        <div class="flex flex-col text-center w-full mb-20">
+          <h2 class="text-xs text-indigo-400 tracking-widest font-medium title-font mb-1">RESEARCH AREAS</h2>
+          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Checkout our Activations!</h1>
+          <p class="lg:w-2/3 mx-auto leading-relaxed text-base">At S<sup>3</sup>, we cover a lot of breadth(deep and wide networks, remember?) in Machine Learning as our work ranges from Dimensionality Reduction to Distributed Machine Learning, all the way upto Graph Neural Networks. </p>
+        </div>
+        <div id="chartdiv"></div>
+    </div>
+    
+  </section>
+
 </body>
 </html>
